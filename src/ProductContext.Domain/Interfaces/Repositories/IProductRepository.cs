@@ -9,8 +9,9 @@ namespace ProductContext.Domain.Interfaces
 {
     public interface IProductRepository
     {
-        Task<ICollection<Product>> Get();
-        Task<Product> Get(int id);
+        Task<ICollection<Product>> GetAsync();
+        Task<Product> GetAsync(int id);
+        Task<bool> VerifyDuplicateNameAsync(string name);
         void Create(Product product);
         void Update(Product product);
         void Deactivate(int id);
