@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductContext.Infra.Data",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductContext.Api", "src\ProductContext.Api\ProductContext.Api.csproj", "{9ABE3ABB-8708-4AE0-9E00-E6A38D9D325F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductContext.Application", "src\ProductContext.Application\ProductContext.Application.csproj", "{D6F54805-5A78-44A5-A1FC-718EE1D1BC18}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{9ABE3ABB-8708-4AE0-9E00-E6A38D9D325F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9ABE3ABB-8708-4AE0-9E00-E6A38D9D325F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9ABE3ABB-8708-4AE0-9E00-E6A38D9D325F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D6F54805-5A78-44A5-A1FC-718EE1D1BC18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D6F54805-5A78-44A5-A1FC-718EE1D1BC18}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D6F54805-5A78-44A5-A1FC-718EE1D1BC18}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D6F54805-5A78-44A5-A1FC-718EE1D1BC18}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
