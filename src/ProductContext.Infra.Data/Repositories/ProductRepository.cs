@@ -1,5 +1,7 @@
-﻿using ProductContext.Domain.Entities;
+﻿using ProductContext.Domain.Dtos.Products;
+using ProductContext.Domain.Entities;
 using ProductContext.Domain.Interfaces;
+using ProductContext.Infra.Data.Mocks;
 
 namespace ProductContext.Infra.Data.Repositories
 {
@@ -10,9 +12,36 @@ namespace ProductContext.Infra.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<ICollection<Product>> GetAsync()
+        public async Task<GetProductsResponseDto> GetAsync(GetProductsDto dto)
         {
-            throw new NotImplementedException();
+            var mockedProducts = ProductsMock.GetMockProducts();
+
+            var products = mockedProducts.Skip(dto.Page * dto.PageSize).Take(dto.PageSize).ToList();
+            var total = mockedProducts.Count;
+
+            var response = new GetProductsResponseDto
+            {
+                Page = dto.Page,
+                PageSize = dto.PageSize,
+                Total = total,
+                Products = products,
+            };
+
+            return response;
+        }
+
+        public async Task<GetProductsResponseDto> GetAsync()
+        {
+            var mockedProducts = ProductsMock.GetMockProducts();
+            var products = mockedProducts.ToList();
+
+            var response = new GetProductsResponseDto
+            {
+                Total = products.Count,
+                Products = products,
+            };
+
+            return response;
         }
 
         public async Task<Product> GetAsync(int id)
@@ -30,7 +59,7 @@ namespace ProductContext.Infra.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<bool> VerifyDuplicateNameAsync(string name)
+        public async Task<bool> ProductNameExistsAsync(string name)
         {
             return false;
         }

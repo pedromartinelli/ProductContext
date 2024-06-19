@@ -3,6 +3,7 @@ using ProductContext.Api.Extensions;
 using ProductContext.Api.Results;
 using ProductContext.Application.Dtos.Product;
 using ProductContext.Application.Interfaces;
+using ProductContext.Domain.Dtos.Products;
 using ProductContext.Domain.Entities;
 
 namespace ProductContext.Api.Controllers;
@@ -18,6 +19,22 @@ public class ProductController : ControllerBase
     {
         _logger = logger;
         _service = service;
+    }
+
+    [HttpGet(Name = "GetProducts")]
+    public async Task<IActionResult> GetAsync([FromQuery] GetProductsDto dto)
+    {
+        if (!ModelState.IsValid) return BadRequest(new ApiResult<Product>(400, ModelState.GetErrors()));
+
+        try
+        {
+            var result = await _service.GetAsync(dto);
+            return Ok(new ApiResult<GetProductsResponseDto>(200, result));
+        }
+        catch
+        {
+            return StatusCode(500, new ApiResult<Product>(500, "01EX1 - Falha interna no servidor"));
+        }
     }
 
     [HttpPost(Name = "CreateProduct")]
@@ -36,7 +53,7 @@ public class ProductController : ControllerBase
         }
         catch
         {
-            return StatusCode(500, new ApiResult<Product>(500, "02EX5 - Falha interna no servidor"));
+            return StatusCode(500, new ApiResult<Product>(500, "01EX2 - Falha interna no servidor"));
         }
     }
 }
