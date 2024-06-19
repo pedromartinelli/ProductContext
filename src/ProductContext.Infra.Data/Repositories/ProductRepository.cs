@@ -3,7 +3,7 @@ using ProductContext.Domain.Interfaces;
 
 namespace ProductContext.Infra.Data.Repositories
 {
-    internal class ProductRepository : IProductRepository
+    public class ProductRepository : IProductRepository
     {
         public async Task DeactivateAsync(int id)
         {
@@ -22,7 +22,7 @@ namespace ProductContext.Infra.Data.Repositories
 
         public async Task RegisterAsync(Product product)
         {
-            throw new NotImplementedException();
+            return;
         }
 
         public async Task UpdateAsync(Product product)
@@ -32,7 +32,7 @@ namespace ProductContext.Infra.Data.Repositories
 
         public async Task<bool> VerifyDuplicateNameAsync(string name)
         {
-            return true;
+            return false;
         }
     }
 }

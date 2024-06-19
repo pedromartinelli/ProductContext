@@ -1,6 +1,7 @@
+using ProductContext.Application.Interfaces;
+using ProductContext.Application.Services;
 using ProductContext.Domain.Interfaces;
-using ProductContext.Domain.Interfaces.Services;
-using ProductContext.Domain.Services;
+using ProductContext.Infra.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

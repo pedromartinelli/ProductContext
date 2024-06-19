@@ -1,6 +1,7 @@
-﻿using ProductContext.Domain.Dtos.Product;
+﻿
+using ProductContext.Application.Dtos.Product;
 
-namespace ProductContext.Domain.Interfaces.Services
+namespace ProductContext.Application.Interfaces
 {
     public interface IProductService
     {

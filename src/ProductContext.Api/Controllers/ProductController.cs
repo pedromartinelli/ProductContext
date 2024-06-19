@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using ProductContext.Api.Extensions;
 using ProductContext.Api.Results;
-using ProductContext.Domain.Dtos.Product;
+using ProductContext.Application.Dtos.Product;
+using ProductContext.Application.Interfaces;
 using ProductContext.Domain.Entities;
-using ProductContext.Domain.Interfaces.Services;
 
 namespace ProductContext.Api.Controllers;
 
@@ -32,7 +32,7 @@ public class ProductController : ControllerBase
         }
         catch (ApplicationException ex)
         {
-            return NotFound(new ApiResult<Product>(404, ex.Message));
+            return Conflict(new ApiResult<Product>(404, ex.Message));
         }
         catch
         {

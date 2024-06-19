@@ -1,9 +1,11 @@
-﻿using ProductContext.Domain.Dtos.Product;
+﻿
+
+using ProductContext.Application.Dtos.Product;
+using ProductContext.Application.Interfaces;
 using ProductContext.Domain.Entities;
 using ProductContext.Domain.Interfaces;
-using ProductContext.Domain.Interfaces.Services;
 
-namespace ProductContext.Domain.Services
+namespace ProductContext.Application.Services
 {
     public class ProductService : IProductService
     {
