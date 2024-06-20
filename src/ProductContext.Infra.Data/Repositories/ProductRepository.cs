@@ -1,4 +1,4 @@
-﻿using ProductContext.Domain.Dtos.Products;
+﻿using ProductContext.Domain.Dtos.ProductDtos;
 using ProductContext.Domain.Entities;
 using ProductContext.Domain.Interfaces;
 using ProductContext.Infra.Data.Mocks;
@@ -7,6 +7,13 @@ namespace ProductContext.Infra.Data.Repositories
 {
     public class ProductRepository : IProductRepository
     {
+        private readonly ProductsMock _mock;
+
+        public ProductRepository(ProductsMock mock)
+        {
+            _mock = mock;
+        }
+
         public async Task DeactivateAsync(int id)
         {
             throw new NotImplementedException();
@@ -14,7 +21,7 @@ namespace ProductContext.Infra.Data.Repositories
 
         public async Task<GetProductsResponseDto> GetAsync(GetProductsDto dto)
         {
-            var mockedProducts = ProductsMock.GetMockProducts();
+            var mockedProducts = _mock.GetMockProducts();
 
             var products = mockedProducts.Skip(dto.Page * dto.PageSize).Take(dto.PageSize).ToList();
             var total = mockedProducts.Count;
@@ -32,7 +39,7 @@ namespace ProductContext.Infra.Data.Repositories
 
         public async Task<GetProductsResponseDto> GetAsync()
         {
-            var mockedProducts = ProductsMock.GetMockProducts();
+            var mockedProducts = _mock.GetMockProducts();
             var products = mockedProducts.ToList();
 
             var response = new GetProductsResponseDto
@@ -44,24 +51,32 @@ namespace ProductContext.Infra.Data.Repositories
             return response;
         }
 
-        public async Task<Product> GetAsync(int id)
+        public async Task<Product?> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var mockedProducts = _mock.GetMockProducts();
+
+            return await Task.Run(() => mockedProducts.FirstOrDefault(p => p.Id == id));
         }
 
-        public async Task RegisterAsync(Product product)
+        public async Task<Product> RegisterAsync(Product product)
         {
-            return;
+            var mockedProducts = _mock.GetMockProducts();
+
+            await Task.Run(() => mockedProducts.Add(product));
+
+            return product;
         }
 
-        public async Task UpdateAsync(Product product)
+        public async Task<Product> UpdateAsync(Product product)
         {
             throw new NotImplementedException();
         }
 
         public async Task<bool> ProductNameExistsAsync(string name)
         {
-            return false;
+            var mockedProducts = _mock.GetMockProducts();
+
+            return await Task.Run(() => mockedProducts.Any(x => x.Name == name));
         }
     }
 }

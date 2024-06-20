@@ -1,11 +1,12 @@
-﻿using ProductContext.Application.Dtos.Product;
-using ProductContext.Domain.Dtos.Products;
+﻿using ProductContext.Domain.Dtos.ProductDtos;
+using ProductContext.Domain.Entities;
 
 namespace ProductContext.Application.Interfaces
 {
     public interface IProductService
     {
-        Task CreateAsync(CreateProductDto dto);
+        Task<Product> CreateAsync(CreateProductDto dto);
         Task<GetProductsResponseDto> GetAsync(GetProductsDto dto);
+        Task<Product> GetAsync(Guid id);
     }
 }

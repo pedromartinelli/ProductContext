@@ -1,27 +1,27 @@
-﻿namespace ProductContext.Api.Results
+﻿namespace ProductContext.Api.Responses
 {
-    public class ApiResult<T>
+    public class ApiResponse<T>
     {
-        public ApiResult(int statusCode, T data, List<string> errors)
+        public ApiResponse(int statusCode, T data, List<string> errors)
         {
             Data = data;
             Errors = errors;
             StatusCode = statusCode;
         }
 
-        public ApiResult(int statusCode, T data)
+        public ApiResponse(int statusCode, T data)
         {
             Data = data;
             StatusCode = statusCode;
         }
 
-        public ApiResult(int statusCode, List<string> errors)
+        public ApiResponse(int statusCode, List<string> errors)
         {
             Errors = errors;
             StatusCode = statusCode;
         }
 
-        public ApiResult(int statusCode, string error)
+        public ApiResponse(int statusCode, string error)
         {
             Errors.Add(error);
             StatusCode = statusCode;

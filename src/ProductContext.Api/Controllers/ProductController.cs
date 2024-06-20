@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using ProductContext.Api.Extensions;
-using ProductContext.Api.Results;
-using ProductContext.Application.Dtos.Product;
+using ProductContext.Api.Responses;
 using ProductContext.Application.Interfaces;
-using ProductContext.Domain.Dtos.Products;
+using ProductContext.Domain.Dtos.ProductDtos;
 using ProductContext.Domain.Entities;
 
 namespace ProductContext.Api.Controllers;
@@ -24,36 +23,54 @@ public class ProductController : ControllerBase
     [HttpGet(Name = "GetProducts")]
     public async Task<IActionResult> GetAsync([FromQuery] GetProductsDto dto)
     {
-        if (!ModelState.IsValid) return BadRequest(new ApiResult<Product>(400, ModelState.GetErrors()));
+        if (!ModelState.IsValid) return BadRequest(new ApiResponse<Product>(400, ModelState.GetErrors()));
 
         try
         {
             var result = await _service.GetAsync(dto);
-            return Ok(new ApiResult<GetProductsResponseDto>(200, result));
+            return Ok(new ApiResponse<GetProductsResponseDto>(200, result));
         }
         catch
         {
-            return StatusCode(500, new ApiResult<Product>(500, "01EX1 - Falha interna no servidor"));
+            return StatusCode(500, new ApiResponse<Product>(500, "01EX1 - Falha interna no servidor"));
+        }
+    }
+
+    [HttpGet("{id:Guid}", Name = "GetProduct")]
+    public async Task<IActionResult> GetOneAsync([FromRoute] Guid id)
+    {
+        try
+        {
+            var result = await _service.GetAsync(id);
+            return Ok(new ApiResponse<Product>(200, result));
+        }
+        catch (ApplicationException ex)
+        {
+            return NotFound(new ApiResponse<Product>(404, ex.Message));
+        }
+        catch
+        {
+            return StatusCode(500, new ApiResponse<Product>(500, "01EX1 - Falha interna no servidor"));
         }
     }
 
     [HttpPost(Name = "CreateProduct")]
     public async Task<IActionResult> PostAsync([FromBody] CreateProductDto dto)
     {
-        if (!ModelState.IsValid) return BadRequest(new ApiResult<Product>(400, ModelState.GetErrors()));
+        if (!ModelState.IsValid) return BadRequest(new ApiResponse<Product>(400, ModelState.GetErrors()));
 
         try
         {
-            await _service.CreateAsync(dto);
-            return StatusCode(201);
+            var result = await _service.CreateAsync(dto);
+            return CreatedAtRoute("GetProduct", new { id = result.Id }, result);
         }
         catch (ApplicationException ex)
         {
-            return Conflict(new ApiResult<Product>(404, ex.Message));
+            return Conflict(new ApiResponse<Product>(404, ex.Message));
         }
         catch
         {
-            return StatusCode(500, new ApiResult<Product>(500, "01EX2 - Falha interna no servidor"));
+            return StatusCode(500, new ApiResponse<Product>(500, "01EX2 - Falha interna no servidor"));
         }
     }
 }

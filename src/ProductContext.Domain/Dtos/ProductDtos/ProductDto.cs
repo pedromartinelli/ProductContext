@@ -1,4 +1,4 @@
-﻿namespace ProductContext.Application.Dtos.Products
+﻿namespace ProductContext.Application.Dtos.ProductDtos
 {
     public class ProductDto
     {

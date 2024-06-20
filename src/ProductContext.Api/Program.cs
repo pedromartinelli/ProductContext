@@ -1,6 +1,7 @@
 using ProductContext.Application.Interfaces;
 using ProductContext.Application.Services;
 using ProductContext.Domain.Interfaces;
+using ProductContext.Infra.Data.Mocks;
 using ProductContext.Infra.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,6 +35,8 @@ void ConfigureServices(WebApplicationBuilder builder)
     builder.Services.AddScoped<IProductService, ProductService>();
 
     builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+    builder.Services.AddSingleton<ProductsMock>();
 }
 
 void ConfigureMvc(WebApplicationBuilder builder)

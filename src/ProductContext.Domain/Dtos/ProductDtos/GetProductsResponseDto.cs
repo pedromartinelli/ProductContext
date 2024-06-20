@@ -1,6 +1,6 @@
 ﻿using ProductContext.Domain.Entities;
 
-namespace ProductContext.Domain.Dtos.Products
+namespace ProductContext.Domain.Dtos.ProductDtos
 {
     public class GetProductsResponseDto
     {

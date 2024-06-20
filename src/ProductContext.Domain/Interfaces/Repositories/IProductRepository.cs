@@ -1,4 +1,4 @@
-﻿using ProductContext.Domain.Dtos.Products;
+﻿using ProductContext.Domain.Dtos.ProductDtos;
 using ProductContext.Domain.Entities;
 
 namespace ProductContext.Domain.Interfaces
@@ -7,10 +7,10 @@ namespace ProductContext.Domain.Interfaces
     {
         Task<GetProductsResponseDto> GetAsync();
         Task<GetProductsResponseDto> GetAsync(GetProductsDto dto);
-        Task<Product> GetAsync(int id);
+        Task<Product?> GetAsync(Guid id);
         Task<bool> ProductNameExistsAsync(string name);
-        Task RegisterAsync(Product product);
-        Task UpdateAsync(Product product);
+        Task<Product> RegisterAsync(Product product);
+        Task<Product> UpdateAsync(Product product);
         Task DeactivateAsync(int id);
     }
 }
