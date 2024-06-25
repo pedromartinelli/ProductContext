@@ -27,9 +27,9 @@ public class ProductController : ControllerBase
 
         try
         {
-            var result = await _service.GetAsync(dto);
+            var result = await _service.GetAll(dto);
             return Ok(new ApiResponse<GetProductsResponseDto>(200, result));
-        } 
+        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "01EX1 - Erro ao listar produtos");
@@ -42,7 +42,7 @@ public class ProductController : ControllerBase
     {
         try
         {
-            var result = await _service.GetAsync(id);
+            var result = await _service.GetById(id);
             return Ok(new ApiResponse<Product>(200, result));
         }
         catch (ApplicationException ex)
@@ -64,7 +64,7 @@ public class ProductController : ControllerBase
 
         try
         {
-            var result = await _service.CreateAsync(dto);
+            var result = await _service.Create(dto);
             return CreatedAtRoute("GetProduct", new { id = result.Id }, result);
         }
         catch (ApplicationException ex)
@@ -72,7 +72,7 @@ public class ProductController : ControllerBase
             _logger.LogWarning(ex, "Conflito ao criar produto: {Message}", ex.Message);
             return Conflict(new ApiResponse<Product>(404, ex.Message));
         }
-        catch (Exception ex) 
+        catch (Exception ex)
         {
             _logger.LogError(ex, "01EX3 - Erro ao cadastrar produto");
             return StatusCode(500, new ApiResponse<Product>(500, "Falha interna no servidor"));
