@@ -50,7 +50,7 @@ public class ProductController : ControllerBase
         }
         catch
         {
-            return StatusCode(500, new ApiResponse<Product>(500, "01EX1 - Falha interna no servidor"));
+            return StatusCode(500, new ApiResponse<Product>(500, "01EX2 - Falha interna no servidor"));
         }
     }
 
@@ -70,7 +70,7 @@ public class ProductController : ControllerBase
         }
         catch
         {
-            return StatusCode(500, new ApiResponse<Product>(500, "01EX2 - Falha interna no servidor"));
+            return StatusCode(500, new ApiResponse<Product>(500, "01EX3 - Falha interna no servidor"));
         }
     }
 }
