@@ -2,7 +2,7 @@
 
 namespace ProductContext.Domain.Dtos.ProductDtos
 {
-    public class CreateProductDto
+    public class CreateProductRequestDto
     {
 
         [Required(ErrorMessage = "O nome é obrigatório")]

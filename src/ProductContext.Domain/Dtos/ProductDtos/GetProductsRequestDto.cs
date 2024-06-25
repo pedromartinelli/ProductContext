@@ -2,7 +2,7 @@
 
 namespace ProductContext.Domain.Dtos.ProductDtos
 {
-    public class GetProductsDto
+    public class GetProductsRequestDto
     {
         [Range(0, double.MaxValue, ErrorMessage = "A página não pode ser um valor negativo")]
         public int Page { get; set; }

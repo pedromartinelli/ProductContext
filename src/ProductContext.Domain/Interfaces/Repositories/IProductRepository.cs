@@ -6,7 +6,7 @@ namespace ProductContext.Domain.Interfaces
     public interface IProductRepository
     {
         Task<GetProductsResponseDto> GetAsync();
-        Task<GetProductsResponseDto> GetAsync(GetProductsDto dto);
+        Task<GetProductsResponseDto> GetAsync(GetProductsRequestDto dto);
         Task<Product?> GetAsync(Guid id);
         Task<bool> ProductNameExistsAsync(string name);
         Task<Product> RegisterAsync(Product product);

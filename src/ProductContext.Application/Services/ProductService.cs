@@ -14,7 +14,7 @@ namespace ProductContext.Application.Services
             _repository = repository;
         }
 
-        public async Task<Product> CreateAsync(CreateProductDto dto)
+        public async Task<Product> CreateAsync(CreateProductRequestDto dto)
         {
             var existingName = await _repository.ProductNameExistsAsync(dto.Name);
             if (existingName) throw new ApplicationException("Já existe um produto cadastrado com esse nome.");
@@ -26,7 +26,7 @@ namespace ProductContext.Application.Services
             return product;
         }
 
-        public async Task<GetProductsResponseDto> GetAsync(GetProductsDto dto)
+        public async Task<GetProductsResponseDto> GetAsync(GetProductsRequestDto dto)
         {
             if (dto.PageSize == 0)
             {

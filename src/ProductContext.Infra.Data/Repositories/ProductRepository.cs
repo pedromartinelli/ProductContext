@@ -19,7 +19,7 @@ namespace ProductContext.Infra.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<GetProductsResponseDto> GetAsync(GetProductsDto dto)
+        public async Task<GetProductsResponseDto> GetAsync(GetProductsRequestDto dto)
         {
             var mockedProducts = _mock.GetMockProducts();
 

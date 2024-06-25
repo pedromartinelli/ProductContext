@@ -21,7 +21,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet(Name = "GetProducts")]
-    public async Task<IActionResult> GetAsync([FromQuery] GetProductsDto dto)
+    public async Task<IActionResult> GetAsync([FromQuery] GetProductsRequestDto dto)
     {
         if (!ModelState.IsValid) return BadRequest(new ApiResponse<Product>(400, ModelState.GetErrors()));
 
@@ -29,10 +29,11 @@ public class ProductController : ControllerBase
         {
             var result = await _service.GetAsync(dto);
             return Ok(new ApiResponse<GetProductsResponseDto>(200, result));
-        }
-        catch
+        } 
+        catch (Exception ex)
         {
-            return StatusCode(500, new ApiResponse<Product>(500, "01EX1 - Falha interna no servidor"));
+            _logger.LogError(ex, "01EX1 - Erro ao listar produtos");
+            return StatusCode(500, new ApiResponse<Product>(500, "Falha interna no servidor"));
         }
     }
 
@@ -46,16 +47,18 @@ public class ProductController : ControllerBase
         }
         catch (ApplicationException ex)
         {
+            _logger.LogWarning(ex, "Erro ao buscar produto: {id}", id);
             return NotFound(new ApiResponse<Product>(404, ex.Message));
         }
-        catch
+        catch (Exception ex)
         {
-            return StatusCode(500, new ApiResponse<Product>(500, "01EX2 - Falha interna no servidor"));
+            _logger.LogError(ex, "01EX2 - Erro ao buscar produto");
+            return StatusCode(500, new ApiResponse<Product>(500, "Falha interna no servidor"));
         }
     }
 
     [HttpPost(Name = "CreateProduct")]
-    public async Task<IActionResult> PostAsync([FromBody] CreateProductDto dto)
+    public async Task<IActionResult> PostAsync([FromBody] CreateProductRequestDto dto)
     {
         if (!ModelState.IsValid) return BadRequest(new ApiResponse<Product>(400, ModelState.GetErrors()));
 
@@ -66,11 +69,13 @@ public class ProductController : ControllerBase
         }
         catch (ApplicationException ex)
         {
+            _logger.LogWarning(ex, "Conflito ao criar produto: {Message}", ex.Message);
             return Conflict(new ApiResponse<Product>(404, ex.Message));
         }
-        catch
+        catch (Exception ex) 
         {
-            return StatusCode(500, new ApiResponse<Product>(500, "01EX3 - Falha interna no servidor"));
+            _logger.LogError(ex, "01EX3 - Erro ao cadastrar produto");
+            return StatusCode(500, new ApiResponse<Product>(500, "Falha interna no servidor"));
         }
     }
 }
