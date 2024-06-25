@@ -5,12 +5,12 @@ namespace ProductContext.Domain.Interfaces
 {
     public interface IProductRepository
     {
-        Task<GetProductsResponseDto> GetAsync();
-        Task<GetProductsResponseDto> GetAsync(GetProductsRequestDto dto);
-        Task<Product?> GetAsync(Guid id);
-        Task<bool> ProductNameExistsAsync(string name);
-        Task<Product> RegisterAsync(Product product);
-        Task<Product> UpdateAsync(Product product);
-        Task DeactivateAsync(int id);
+        Task<GetProductsResponseDto> GetAll();
+        Task<GetProductsResponseDto> GetAll(GetProductsRequestDto dto);
+        Task<Product?> GetById(Guid id);
+        Task<bool> ProductNameExists(string name);
+        Task<Product> Register(Product product);
+        Task<Product> Update(Product product);
+        Task Deactivate(int id);
     }
 }

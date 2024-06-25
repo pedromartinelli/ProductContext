@@ -14,12 +14,12 @@ namespace ProductContext.Infra.Data.Repositories
             _mock = mock;
         }
 
-        public async Task DeactivateAsync(int id)
+        public async Task Deactivate(int id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<GetProductsResponseDto> GetAsync(GetProductsRequestDto dto)
+        public async Task<GetProductsResponseDto> GetAll(GetProductsRequestDto dto)
         {
             var mockedProducts = _mock.GetMockProducts();
 
@@ -37,7 +37,7 @@ namespace ProductContext.Infra.Data.Repositories
             return response;
         }
 
-        public async Task<GetProductsResponseDto> GetAsync()
+        public async Task<GetProductsResponseDto> GetAll()
         {
             var mockedProducts = _mock.GetMockProducts();
             var products = mockedProducts.ToList();
@@ -51,14 +51,14 @@ namespace ProductContext.Infra.Data.Repositories
             return response;
         }
 
-        public async Task<Product?> GetAsync(Guid id)
+        public async Task<Product?> GetById(Guid id)
         {
             var mockedProducts = _mock.GetMockProducts();
 
             return await Task.Run(() => mockedProducts.FirstOrDefault(p => p.Id == id));
         }
 
-        public async Task<Product> RegisterAsync(Product product)
+        public async Task<Product> Register(Product product)
         {
             var mockedProducts = _mock.GetMockProducts();
 
@@ -67,12 +67,12 @@ namespace ProductContext.Infra.Data.Repositories
             return product;
         }
 
-        public async Task<Product> UpdateAsync(Product product)
+        public async Task<Product> Update(Product product)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<bool> ProductNameExistsAsync(string name)
+        public async Task<bool> ProductNameExists(string name)
         {
             var mockedProducts = _mock.GetMockProducts();
 

@@ -14,35 +14,35 @@ namespace ProductContext.Application.Services
             _repository = repository;
         }
 
-        public async Task<Product> CreateAsync(CreateProductRequestDto dto)
+        public async Task<Product> Create(CreateProductRequestDto dto)
         {
-            var existingName = await _repository.ProductNameExistsAsync(dto.Name);
+            var existingName = await _repository.ProductNameExists(dto.Name);
             if (existingName) throw new ApplicationException("Já existe um produto cadastrado com esse nome.");
 
             var product = new Product(dto.Name, dto.Description, dto.Price, dto.Quantity);
 
-            await _repository.RegisterAsync(product);
+            await _repository.Register(product);
 
             return product;
         }
 
-        public async Task<GetProductsResponseDto> GetAsync(GetProductsRequestDto dto)
+        public async Task<GetProductsResponseDto> GetAll(GetProductsRequestDto dto)
         {
             if (dto.PageSize == 0)
             {
-                return await _repository.GetAsync();
+                return await _repository.GetAll();
             }
             else
             {
-                return await _repository.GetAsync(dto);
+                return await _repository.GetAll(dto);
             }
         }
 
-        public Task<Product> GetAsync(Guid id)
+        public Task<Product> GetById(Guid id)
         {
-            var product = _repository.GetAsync(id);
+            var product = _repository.GetById(id);
             if (product.Result == null) throw new ApplicationException("Não existe um produto com o Id informado.");
-            return product;
+            return product!;
         }
     }
 }

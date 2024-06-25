@@ -5,8 +5,8 @@ namespace ProductContext.Application.Interfaces
 {
     public interface IProductService
     {
-        Task<Product> CreateAsync(CreateProductRequestDto dto);
-        Task<GetProductsResponseDto> GetAsync(GetProductsRequestDto dto);
-        Task<Product> GetAsync(Guid id);
+        Task<Product> Create(CreateProductRequestDto dto);
+        Task<GetProductsResponseDto> GetAll(GetProductsRequestDto dto);
+        Task<Product> GetById(Guid id);
     }
 }
