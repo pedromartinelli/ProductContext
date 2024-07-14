@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using ProductContext.Application.Interfaces;
 using ProductContext.Application.Services;
 using ProductContext.Domain.Interfaces;
@@ -11,7 +12,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 ConfigureApi(builder);
-ConfigureServices(builder);
+ConfigureDbContext(builder);
+ConfigureServices(builder.Services);
 
 var app = builder.Build();
 
@@ -22,22 +24,16 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
 
-void ConfigureServices(WebApplicationBuilder builder)
+void ConfigureServices(IServiceCollection services)
 {
-    builder.Services.AddDbContext<ProductDbContext>();
-
-    builder.Services.AddScoped<IProductService, ProductService>();
-
-    builder.Services.AddScoped<IProductRepository, ProductRepository>();
-
-    builder.Services.AddSingleton<ProductsMock>();
+    services.AddScoped<IProductService, ProductService>();
+    services.AddScoped<IProductRepository, ProductRepository>();
+    services.AddSingleton<ProductsMock>();
 }
 
 void ConfigureApi(WebApplicationBuilder builder)
@@ -46,4 +42,11 @@ void ConfigureApi(WebApplicationBuilder builder)
     {
         options.SuppressModelStateInvalidFilter = true;
     });
+}
+
+void ConfigureDbContext(WebApplicationBuilder builder) 
+{
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+    builder.Services.AddDbContext<ProductDbContext>(options => options.UseSqlServer(connectionString));
 }

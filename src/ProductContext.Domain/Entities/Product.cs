@@ -8,7 +8,7 @@ public class Product : BaseEntity
         Description = description;
         Price = price;
         Quantity = quantity;
-        CreationRecord();
+        CreateRecord();
     }
 
     public string Name { get; private set; }

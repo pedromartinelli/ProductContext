@@ -12,9 +12,10 @@ namespace ProductContext.Domain.Entities
         public DateTime CreateDate { get; private set; }
         public DateTime LastUpdateDate { get; private set; }
 
-        public void CreationRecord()
+        public void CreateRecord()
         {
             CreateDate = DateTime.UtcNow;
+            LastUpdateDate = DateTime.UtcNow;
         }
 
         public void UpdateRecord()
