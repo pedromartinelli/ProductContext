@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductContext.Infra.Data",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductContext.Api", "src\ProductContext.Api\ProductContext.Api.csproj", "{9ABE3ABB-8708-4AE0-9E00-E6A38D9D325F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductContext.Application", "src\ProductContext.Application\ProductContext.Application.csproj", "{CFB01EAA-184E-4255-92DC-512F05715581}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductContext.Application", "src\ProductContext.Application\ProductContext.Application.csproj", "{CFB01EAA-184E-4255-92DC-512F05715581}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
