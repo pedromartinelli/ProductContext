@@ -3,7 +3,6 @@ using ProductContext.Application.Interfaces;
 using ProductContext.Application.Services;
 using ProductContext.Domain.Interfaces;
 using ProductContext.Infra.Data;
-using ProductContext.Infra.Data.Mocks;
 using ProductContext.Infra.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,7 +32,6 @@ void ConfigureServices(IServiceCollection services)
 {
     services.AddScoped<IProductService, ProductService>();
     services.AddScoped<IProductRepository, ProductRepository>();
-    services.AddSingleton<ProductsMock>();
 }
 
 void ConfigureApi(WebApplicationBuilder builder)
@@ -44,7 +42,7 @@ void ConfigureApi(WebApplicationBuilder builder)
     });
 }
 
-void ConfigureDbContext(WebApplicationBuilder builder) 
+void ConfigureDbContext(WebApplicationBuilder builder)
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
