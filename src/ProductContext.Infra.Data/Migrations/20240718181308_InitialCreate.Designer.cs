@@ -12,7 +12,7 @@ using ProductContext.Infra.Data;
 namespace ProductContext.Infra.Data.Migrations
 {
     [DbContext(typeof(ProductDbContext))]
-    [Migration("20240714222926_InitialCreate")]
+    [Migration("20240718181308_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace ProductContext.Infra.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.20")
+                .HasAnnotation("ProductVersion", "8.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);

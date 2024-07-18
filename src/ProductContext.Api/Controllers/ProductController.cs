@@ -70,7 +70,7 @@ public class ProductController : ControllerBase
         catch (ApplicationException ex)
         {
             _logger.LogWarning(ex, "Conflito ao criar produto: {Message}", ex.Message);
-            return Conflict(new ApiResponse<Product>(404, ex.Message));
+            return Conflict(new ApiResponse<Product>(409, ex.Message));
         }
         catch (Exception ex)
         {

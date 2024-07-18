@@ -6,16 +6,16 @@ namespace ProductContext.Domain.Dtos.ProductDtos
     {
 
         [Required(ErrorMessage = "O nome é obrigatório")]
-        [StringLength(100, MinimumLength = 2, ErrorMessage = "O nome deve conter entre 2 e 100 caracteres")]
+        [Length(2, 100, ErrorMessage = "O nome deve conter entre 2 e 100 caracteres")]
         public string Name { get; set; }
 
-        [StringLength(200, ErrorMessage = "A descrição deve conter no máximo 200 caracteres")]
+        [Length(0, 200, ErrorMessage = "A descrição deve conter no máximo 200 caracteres")]
         public string Description { get; set; }
 
-        [Range(0, double.MaxValue, ErrorMessage = "O preço não pode ser um valor negativo")]
+        [Range(0, double.MaxValue, MinimumIsExclusive = false, ErrorMessage = "O preço não pode ser um valor negativo")]
         public decimal Price { get; set; }
 
-        [Range(0, double.MaxValue, ErrorMessage = "A quantidade em estoque não pode ser um valor negativo")]
+        [Range(0, double.MaxValue, MinimumIsExclusive = false, ErrorMessage = "A quantidade em estoque não pode ser um valor negativo")]
         public int Quantity { get; set; }
     }
 }

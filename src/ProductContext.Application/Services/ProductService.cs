@@ -16,12 +16,12 @@ namespace ProductContext.Application.Services
 
         public async Task<Product> Create(CreateProductRequestDto dto)
         {
-            var existingName = await _repository.ProductNameExists(dto.Name);
+            var existingName = await _repository.VerifyNameAsync(dto.Name);
             if (existingName) throw new ApplicationException("Já existe um produto cadastrado com esse nome.");
 
             var product = new Product(dto.Name, dto.Description, dto.Price, dto.Quantity);
 
-            await _repository.Register(product);
+            await _repository.CreateAsync(product);
 
             return product;
         }
@@ -30,17 +30,17 @@ namespace ProductContext.Application.Services
         {
             if (dto.PageSize == 0)
             {
-                return await _repository.GetAll();
+                return await _repository.GetAsync();
             }
             else
             {
-                return await _repository.GetAll(dto);
+                return await _repository.GetAsync(dto);
             }
         }
 
         public Task<Product> GetById(Guid id)
         {
-            var product = _repository.GetById(id);
+            var product = _repository.GetByIdAsync(id);
             if (product.Result == null) throw new ApplicationException("Não existe um produto com o Id informado.");
             return product!;
         }
