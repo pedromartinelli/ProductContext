@@ -5,7 +5,7 @@ using System.Text;
 using ProductContext.Domain.Entities;
 using ProductContext.Application.Extensions;
 
-namespace ProductContext.Application.Services
+namespace ProductContext.Api.Auth
 {
     public class TokenService
     {
