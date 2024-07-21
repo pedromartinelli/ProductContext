@@ -5,9 +5,14 @@ using ProductContext.Domain.Interfaces;
 
 namespace ProductContext.Infra.Data.Repositories
 {
-    public class ProductRepository(ProductDbContext context) : IProductRepository
+    public class ProductRepository : IProductRepository
     {
-        private readonly ProductDbContext _context = context;
+        private readonly ProductDbContext _context;
+
+        public ProductRepository(ProductDbContext context)
+        {
+            _context = context;
+        }
 
         public async Task<GetProductsResponseDto> GetAsync(GetProductsRequestDto dto)
         {

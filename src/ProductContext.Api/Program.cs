@@ -4,13 +4,20 @@ using ProductContext.Application.Services;
 using ProductContext.Domain.Interfaces;
 using ProductContext.Infra.Data;
 using ProductContext.Infra.Data.Repositories;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Identity.Client;
+using Microsoft.IdentityModel.Tokens;
+using ProductContext.Api;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+LoadConfiguration(builder);
 ConfigureApi(builder);
+ConfigureAuthentication(builder);
 ConfigureDbContext(builder);
 ConfigureServices(builder.Services);
 
@@ -23,6 +30,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
@@ -47,4 +55,30 @@ void ConfigureDbContext(WebApplicationBuilder builder)
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
     builder.Services.AddDbContext<ProductDbContext>(options => options.UseSqlServer(connectionString));
+}
+
+void ConfigureAuthentication(WebApplicationBuilder builder)
+{
+    var key = Encoding.ASCII.GetBytes(Configuration.JwtKey);
+    builder.Services.AddAuthentication(x =>
+    {
+        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    }).AddJwtBearer(x =>
+    {
+        x.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
+}
+
+void LoadConfiguration(WebApplicationBuilder builder)
+{
+    var configuration = builder.Configuration;
+
+    Configuration.JwtKey = configuration.GetValue<string>("JwtKey") ?? throw new InvalidOperationException("JwtKey não foi configurada corretamente.");
 }
