@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ProductContext.Api.Extensions;
 using ProductContext.Api.Responses;
 using ProductContext.Application.Interfaces;
@@ -64,6 +65,7 @@ namespace ProductContext.Api.Controllers
         }
 
         [HttpGet("claim")]
+        [Authorize]
         public async Task<IActionResult> GetUserClaimAsync()
         {
             try
