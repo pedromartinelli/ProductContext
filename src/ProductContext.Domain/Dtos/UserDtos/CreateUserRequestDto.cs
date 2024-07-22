@@ -21,9 +21,6 @@ namespace ProductContext.Domain.Dtos.UserDtos
         [Length(2, 100, ErrorMessage = "A senha deve conter no mínimo 8")]
         public string Password { get; set; }
 
-        [JsonIgnore]
-        public string PasswordHash { get; set; }
-
         [Required(ErrorMessage = "A data de nascimento é obrigatória")]
         [DataType(DataType.DateTime)]
         public DateTime BirthDate { get; set; }

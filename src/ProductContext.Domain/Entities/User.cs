@@ -12,20 +12,13 @@ namespace ProductContext.Domain.Entities
 {
     public class User : BaseEntity
     {
-        protected User()
+        public User(string name, string email, string passwordHash, DateTime birthDate)
         {
+            Name = name;
+            Email = email;
+            PasswordHash = passwordHash;
+            BirthDate = birthDate;
             CreateRecord();
-        }
-
-        public static User CreateFromDto(CreateUserRequestDto dto)
-        {
-            return new User
-            {
-                Name = dto.Name,
-                Email = dto.Email,
-                PasswordHash = dto.PasswordHash,
-                BirthDate = dto.BirthDate,
-            };
         }
 
         public string Name { get; private set; }

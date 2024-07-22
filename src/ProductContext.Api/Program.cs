@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Tokens;
 using ProductContext.Api;
+using ProductContext.Api.Auth;
+using ProductContext.Domain.Interfaces.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +42,14 @@ void ConfigureServices(IServiceCollection services)
 {
     services.AddScoped<IProductService, ProductService>();
     services.AddScoped<IProductRepository, ProductRepository>();
+
+    services.AddScoped<IUserService, UserService>();
+    services.AddScoped<IUserRepository, UserRepository>();
+
+    services.AddScoped<ISessionService, SessionService>();
+
+    services.AddScoped<IPasswordHashService, PasswordHashService>();
+    services.AddScoped<TokenService>();
 }
 
 void ConfigureApi(WebApplicationBuilder builder)

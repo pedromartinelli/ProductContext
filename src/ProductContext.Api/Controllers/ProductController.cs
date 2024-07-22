@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProductContext.Api.Extensions;
 using ProductContext.Api.Responses;
@@ -7,8 +8,8 @@ using ProductContext.Domain.Entities;
 
 namespace ProductContext.Api.Controllers;
 
+[Route("api/products")]
 [ApiController]
-[Route("products")]
 public class ProductController : ControllerBase
 {
     private readonly ILogger<ProductController> _logger;
@@ -58,6 +59,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpPost(Name = "CreateProduct")]
+    [Authorize]
     public async Task<IActionResult> PostAsync([FromBody] CreateProductRequestDto dto)
     {
         if (!ModelState.IsValid) return BadRequest(new ApiResponse<Product>(400, ModelState.GetErrors()));

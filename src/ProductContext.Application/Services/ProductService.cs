@@ -38,11 +38,11 @@ namespace ProductContext.Application.Services
             }
         }
 
-        public Task<Product> GetById(Guid id)
+        public async Task<Product> GetById(Guid id)
         {
-            var product = _repository.GetByIdAsync(id);
-            if (product.Result == null) throw new ApplicationException("Não existe um produto com o Id informado.");
-            return product!;
+            var product = await _repository.GetByIdAsync(id);
+            if (product == null) throw new ApplicationException("Não existe um produto com o Id informado.");
+            return product;
         }
     }
 }
