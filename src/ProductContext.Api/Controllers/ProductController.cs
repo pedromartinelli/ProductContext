@@ -22,6 +22,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet(Name = "GetProducts")]
+    [Authorize]
     public async Task<IActionResult> GetAsync([FromQuery] GetProductsRequestDto dto)
     {
         if (!ModelState.IsValid) return BadRequest(new ApiResponse<Product>(400, ModelState.GetErrors()));

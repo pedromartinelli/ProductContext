@@ -1,18 +1,15 @@
-using System.Reflection;
-using Microsoft.EntityFrameworkCore;
-using ProductContext.Application.Interfaces;
-using ProductContext.Application.Services;
-using ProductContext.Domain.Interfaces;
-using ProductContext.Infra.Data;
-using ProductContext.Infra.Data.Repositories;
-using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Identity.Client;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
 using ProductContext.Api;
 using ProductContext.Api.Auth;
+using ProductContext.Application.Interfaces;
+using ProductContext.Application.Services;
+using ProductContext.Domain.Interfaces;
 using ProductContext.Domain.Interfaces.Repositories;
+using ProductContext.Infra.Data;
+using ProductContext.Infra.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -109,26 +106,29 @@ void ConfigureDbContext(WebApplicationBuilder builder)
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-    builder.Services.AddDbContext<ProductDbContext>(options => options.UseSqlServer(connectionString));
+    builder.Services.AddDbContext<ProductDbContext>(options =>
+        options.UseNpgsql(connectionString));
 }
 
 void ConfigureAuthentication(WebApplicationBuilder builder)
 {
-    var key = Encoding.ASCII.GetBytes(Configuration.JwtKey);
-    builder.Services.AddAuthentication(x =>
+    //builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    //            .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
+
+    //builder.Services.AddAuthorization(config =>
+    //{
+    //    config.AddPolicy("AuthZPolicy", policyBuilder =>
+    //        policyBuilder.Requirements.Add(new ScopeAuthorizationRequirement()));
+    //});
+
+    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddMicrosoftIdentityWebApi(options =>
     {
-        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    }).AddJwtBearer(x =>
-    {
-        x.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(key),
-            ValidateIssuer = false,
-            ValidateAudience = false
-        };
-    });
+        builder.Configuration.Bind("AzureAd", options);
+        options.TokenValidationParameters.RoleClaimType = "roles";
+        options.TokenValidationParameters.NameClaimType = "name";
+        options.TokenValidationParameters.ClockSkew = TimeSpan.FromHours(10);
+    }, options => builder.Configuration.Bind("AzureAd", options));
 }
 
 void LoadConfiguration(WebApplicationBuilder builder)
