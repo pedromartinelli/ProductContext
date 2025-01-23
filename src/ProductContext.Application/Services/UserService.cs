@@ -13,9 +13,10 @@ namespace ProductContext.Application.Services
             if (existingUser)
                 throw new ApplicationException("Já existe um usuário cadastrado com esse E-mail.");
 
-            var hashedPassword = hashService.HashPassword(dto.Password);
+            dto.Password = hashService.HashPassword(dto.Password);
 
-            var user = new User(dto.Name, dto.Email, hashedPassword, dto.BirthDate);
+            var user = User.FromDto(dto);
+
             await repository.CreateAsync(user);
 
             return user;
