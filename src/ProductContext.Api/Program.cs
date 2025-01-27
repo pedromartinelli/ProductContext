@@ -1,18 +1,16 @@
-using System.Reflection;
-using Microsoft.EntityFrameworkCore;
-using ProductContext.Application.Interfaces;
-using ProductContext.Application.Services;
-using ProductContext.Domain.Interfaces;
-using ProductContext.Infra.Data;
-using ProductContext.Infra.Data.Repositories;
-using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Identity.Client;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ProductContext.Api;
 using ProductContext.Api.Auth;
+using ProductContext.Application.Interfaces;
+using ProductContext.Application.Services;
+using ProductContext.Domain.Interfaces;
 using ProductContext.Domain.Interfaces.Repositories;
+using ProductContext.Infra.Data;
+using ProductContext.Infra.Data.Repositories;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -69,6 +67,8 @@ ConfigureDbContext(builder);
 ConfigureServices(builder.Services);
 
 var app = builder.Build();
+
+app.MapGet("/", () => "Hello World!");
 
 if (app.Environment.IsDevelopment())
 {

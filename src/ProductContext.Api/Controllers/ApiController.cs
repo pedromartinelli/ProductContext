@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ProductContext.Api.Controllers;
 
-[Route("")]
 [ApiController]
 public class ApiController : ControllerBase
 {
